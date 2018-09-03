@@ -1,3 +1,3 @@
 # Stday.github.io
 My Blog on Github
-I love :coffee: :pizza:, and :dancer:.
+I love :coffee: and :pizza:.
