@@ -1,2 +1,2 @@
 # Stday.github.io
-my Blog on Github
+My Blog on Github
