@@ -7,7 +7,7 @@
 </ul>
 <p>这一篇文章，是我的一次尝试。本文一共 6 个部分，第 1 章，在具体动手之前，先要思考一下整个 Hexo 建站过程一共可以分为几个模块，每个模块涉及到的各个工具扮演的究竟是什么角色。第 2 章，我们正式进入到操作阶段，讲述 Hexo 在本地建站。第 3 章是关于如何把本地建好的网站部署到 Github Pages 上去。第 4 章，介绍如何绑定独立域名。最后两章，分别介绍身为作者如何获得更好的写作体验，以及如何让读者获得更好的访客体验。</p>
 <h2 id="1-动手前的思考"><a href="#1-动手前的思考" class="headerlink" title="1. 动手前的思考"></a>1. 动手前的思考</h2><p>在看这篇文章之前，也许你已经看过不少关于 Hexo 和 Github 搭建博客的文章了，那你肯定见过这些：Hexo、Github Pages、SSH 配置、域名解析、A 记录、CNAME。这些究竟是什么东西？一下子都灌输给我，头好晕。别担心，这一章就是先帮我们理清思路的。</p>
-<p>###1.1 模块划分<br>上面提到的 Hexo、Github Pages、SSH 配置、域名解析、A 记录、CNAME，那么多名词，都是由完全不认识的人创造、负责管理的，所以每个名词所代表的背后的服务之间的耦合度是非常低的。这里，我根据访问网址的不同，将利用 Hexo 和 Github Pages 搭建博客的流程一共分为如下 3 大模块：</p>
+<h3 id="1-1-模块划分"><a href="#1-1-模块划分" class="headerlink" title="1.1 模块划分"></a>1.1 模块划分</h3><p>上面提到的 Hexo、Github Pages、SSH 配置、域名解析、A 记录、CNAME，那么多名词，都是由完全不认识的人创造、负责管理的，所以每个名词所代表的背后的服务之间的耦合度是非常低的。这里，我根据访问网址的不同，将利用 Hexo 和 Github Pages 搭建博客的流程一共分为如下 3 大模块：</p>
 <ul>
 <li><strong>Hexo 本地建站</strong>：这一模块利用 Hexo 在本地（你的电脑）内生成你的网站，可以通过 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 来查看最后生成的网站;</li>
 </ul>
@@ -15,7 +15,7 @@
 <li><strong>部署到 Github Pages</strong>：这一模块介绍 Github Pages 服务以及利用 Hexo 将上一模块中生成的网站部署到 Github 服务器，从而可以通过 your_name.github.io 访问你新建的博客。其中，your_name 是你 Github 的用户名；</li>
 </ul>
 <ul>
-<li><strong>绑定独立域名</strong>：这一模块介绍如何绑定自己购买的独立域名，从而可以通过自己购买的网址访问自己的网站，如果没有购买独立域名的打算，这一模块可以不用进行。<br>###1.2 关键词解释<br>Hexo、Github Pages、SSH 配置、域名解析、A 记录、CNAME 这些名词究竟代表了什么？为了不至于在后面的操作阶段懵逼，这里，我们先来打点预防针。</li>
+<li><strong>绑定独立域名</strong>：这一模块介绍如何绑定自己购买的独立域名，从而可以通过自己购买的网址访问自己的网站，如果没有购买独立域名的打算，这一模块可以不用进行。<h3 id="1-2-关键词解释"><a href="#1-2-关键词解释" class="headerlink" title="1.2 关键词解释"></a>1.2 关键词解释</h3>Hexo、Github Pages、SSH 配置、域名解析、A 记录、CNAME 这些名词究竟代表了什么？为了不至于在后面的操作阶段懵逼，这里，我们先来打点预防针。</li>
 </ul>
 <ul>
 <li><strong>Hexo</strong>：Hexo 是一款静态博客生成器。静态的意思是指生成的博客网站访客只能浏览，没法像淘宝那样在我们的网站上提交信息。Hexo 负责把我们写的 Markdown 文件根据选定的主题（规定网站的外观样式的文件）生成一堆 HTML 以及负责外观样式的 CSS 和 Javascript 文件。此外，Hexo 还提供了帮我们把这一堆 HTML、CSS、Javascript 文件上传到 Github 服务器的功能，也就是部署。</li>
@@ -23,27 +23,18 @@
 <ul>
 <li><strong>Github Page</strong>：我们平时在新浪上看新闻的时候，所有的东西都要从新浪服务器发送到我们的手机、电脑上。我们的网站也一样，需要一个服务器，把用 Hexo 生成的那些 HTML、CSS、Javascript 文件发送给访客。但我们自己没有服务器呀？Github Pages 是 Github 提供的一项免费的静态页面托管服务，提供 your_name.github.io 的域名（your_name 为你的 Github 用户名）发布自己的静态网站。我们把 Hexo 生成的内容上传到 Github 服务器，访客的浏览器就是从 Github 服务器获取相关文件的。</li>
 </ul>
-<p>##2. Hexo 本地建站</p>
-<p>###2.1 安装 Hexo</p>
-<p>根据 Hexo 的官方文档 <a href="http://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">开始使用 — 概述</a>，安装 Hexo 的前提是先安装 <a href="https://nodejs.org/zh-cn/" title="Node.js" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/download" title="Git" target="_blank" rel="noopener">Git</a> ，再安装完这两者后，安装 Hexo 很简单，只需在终端（cmd、Git bash、Node.js command prompt 均可）中敲入如下命令，回车等待安装完成。</p>
-<pre><code>npm install -g hexo-cli
-</code></pre><p>###2.2 建立站点<br><strong>Step 1</strong>: 先在电脑中的某一位置建立好 your_name.github.io 文件夹，比如 D:\Blog\your_name.github.io；</p>
+<h2 id="2-Hexo-本地建站"><a href="#2-Hexo-本地建站" class="headerlink" title="2. Hexo 本地建站"></a>2. Hexo 本地建站</h2><h3 id="2-1-安装-Hexo"><a href="#2-1-安装-Hexo" class="headerlink" title="2.1 安装 Hexo"></a>2.1 安装 Hexo</h3><p>根据 Hexo 的官方文档 <a href="http://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">开始使用 — 概述</a>，安装 Hexo 的前提是先安装 <a href="https://nodejs.org/zh-cn/" title="Node.js" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/download" title="Git" target="_blank" rel="noopener">Git</a> ，再安装完这两者后，安装 Hexo 很简单，只需在终端（cmd、Git bash、Node.js command prompt 均可）中敲入如下命令，回车等待安装完成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-建立站点"><a href="#2-2-建立站点" class="headerlink" title="2.2 建立站点"></a>2.2 建立站点</h3><p><strong>Step 1</strong>: 先在电脑中的某一位置建立好 your_name.github.io 文件夹，比如 D:\Blog\your_name.github.io；</p>
 <p><strong>Step 2</strong>: 在终端中切换到 your_name.github.io 文件夹所在的路径。需要注意的是，在 Windows 中，如果要进入某个磁盘，不需要敲 cd，直接敲盘符即可。比如我要进入 D:\Blog\your_name.github.io，那就输入 D: 回车，然后再 cd Blog\your_name.github.io；</p>
 <p><strong>Step 3</strong>: 由于默认的 NPM 镜像实在太慢太慢，我们把源替换成淘宝的镜像，在终端中执行如下命令：</p>
-<pre><code>npm config set registry &quot;https://registry.npm.taobao.org&quot;
-</code></pre><p>需要注意的是，这一次切换是暂时的，如果下回从 npm 下载一些东西还是觉得非常慢，记得再执行一次这一条命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry &quot;https://registry.npm.taobao.org&quot;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，这一次切换是暂时的，如果下回从 npm 下载一些东西还是觉得非常慢，记得再执行一次这一条命令。</p>
 <p><strong>Step 4</strong>: 根据 Hexo 的官方文档 <a href="https://hexo.io/zh-cn/docs/setup.html" target="_blank" rel="noopener">开始使用 — 建站</a>，依次执行下面两条命令，建立我们的新网站：</p>
-<pre><code>hexo init  
-npm install
-</code></pre><p>换了淘宝的镜像后，应该能在几分钟内完成。完成后，your_name.github.io 文件夹下面的目录如下：</p>
-<pre><code>.
-├── _config.yml
-├── package.json
-├── scaffolds
-├── source
-|   └── _posts
-└── themes  
-</code></pre><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init  </span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>换了淘宝的镜像后，应该能在几分钟内完成。完成后，your_name.github.io 文件夹下面的目录如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+<ul>
 <li>config.yml文件存放着网站的配置信息，可以在这里配置大部分的参数。</li>
 <li>package.json 文件存放着插件信息，从中可以查看那些插件已经安装。</li>
 <li>scaffolds 是模板文件夹，新建文章时，Hexo 会根据 scaffold 来建立文件，不过这个模板和后面的主题里指的模板不一样。</li>
